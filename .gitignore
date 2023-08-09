@@ -1,0 +1,8 @@
+.DS_Store
+lib
+*.wasm
+*.o
+wasi-sdk*
+*.tar.gz
+models
+gh-pages
