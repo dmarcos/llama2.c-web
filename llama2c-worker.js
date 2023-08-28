@@ -12,12 +12,12 @@ var wasmImports = {
   JS: {},
   env: {memory: wasmMemory, table: new WebAssembly.Table({initial: 2, element: 'anyfunc'})},
 };
-var fileRequest = await fetch(self.location.origin + '/' + 'llama2.c/tokenizer.bin');
+var fileRequest = await fetch(pageDirectory + '/' + 'llama2.c/tokenizer.bin');
 debugger;
 var fileContent = await fileRequest.arrayBuffer();
 
 var modelURL = 'https://huggingface.co/karpathy/tinyllamas/resolve/main/stories15M.bin';
-if (isLocalhost()) { modelURL = self.location.origin + '/' + 'models/stories15M.bin'; }
+if (isLocalhost()) { modelURL = pageDirectory + '/' + 'models/stories15M.bin'; }
 
 var modelFileRequest = await fetch(modelURL);
 var contentLength = modelFileRequest.headers.get('Content-Length');
