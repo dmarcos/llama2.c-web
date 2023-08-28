@@ -1,4 +1,5 @@
-var wasiModule = await import(self.location.origin + '/vendor/wasi.js');
+var pageDirectory = self.location.href.substr(0, self.location.href.lastIndexOf('/'));
+var wasiModule = await import(pageDirectory + '/vendor/wasi.js');
 var WASIJS = wasiModule.WASI;
 var WASIContext = wasiModule.WASIContext;
 
