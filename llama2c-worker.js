@@ -1,4 +1,4 @@
-var wasiModule = await import('http://localhost:8080/vendor/wasi.js');
+var wasiModule = await import(self.location.origin + '/vendor/wasi.js');
 var WASIJS = wasiModule.WASI;
 var WASIContext = wasiModule.WASIContext;
 
