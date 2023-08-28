@@ -4,7 +4,7 @@ window.onload = async function () {
   var stderrEl = document.querySelector('.stderr');
   var progressBarFillEl = document.querySelector('.progress-bar-fill');
   var progressBarEl = document.querySelector('.progress-bar');
-  var worker = new Worker('llama2c-worker.js', {type: 'module'});
+  var worker = new Worker('./llama2c-worker.js', {type: 'module'});
 
   worker.addEventListener('message', function(event) {
 
