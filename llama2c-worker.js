@@ -1,4 +1,6 @@
-import { WASI as WASIJS, WASIContext } from '/vendor/wasi.js';
+var wasiModule = await import('http://localhost:8080/vendor/wasi.js');
+var WASIJS = wasiModule.WASI;
+var WASIContext = wasiModule.WASIContext;
 
 var context;
 var result;
@@ -10,6 +12,7 @@ var wasmImports = {
   env: {memory: wasmMemory, table: new WebAssembly.Table({initial: 2, element: 'anyfunc'})},
 };
 var fileRequest = await fetch(self.location.origin + '/' + 'llama2.c/tokenizer.bin');
+debugger;
 var fileContent = await fileRequest.arrayBuffer();
 
 var modelURL = 'https://huggingface.co/karpathy/tinyllamas/resolve/main/stories15M.bin';
