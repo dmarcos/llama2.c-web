@@ -51,7 +51,7 @@ body {
   justify-content: center;
   grid-auto-rows: auto;
   align-items: start;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(300px, 600px));
 /*  grid-auto-rows: fit-content(1em);*/
   grid-gap: 10px;
   width: 40%;
