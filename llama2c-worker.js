@@ -1,14 +1,9 @@
-import { WASI as WASIJS, WASIContext } from '/vendor/wasi.js';
-
+import { WASI } from "/vendor/wasi.js";
 var context;
 var result;
 
 // Initialize WASM memory.
 var wasmMemory = new WebAssembly.Memory({initial:32, maximum: 10000});
-var wasmImports = {
-  JS: {},
-  env: {memory: wasmMemory, table: new WebAssembly.Table({initial: 2, element: 'anyfunc'})},
-};
 var fileRequest = await fetch(self.location.origin + '/' + 'llama2.c/tokenizer.bin');
 var fileContent = await fileRequest.arrayBuffer();
 
@@ -17,7 +12,6 @@ if (isLocalhost()) { modelURL = self.location.origin + '/' + 'models/stories15M.
 
 var modelFileRequest = await fetch(modelURL);
 var contentLength = modelFileRequest.headers.get('Content-Length');
-
 var responseSize = 0;
 let chunksAll = new Uint8Array(contentLength); // (4.1)
 
@@ -44,8 +38,7 @@ async function* streamAsyncIterable(stream) {
 }
 
 var output = '';
-
-context = new WASIContext({
+context = new WASI({
   args: ['run', 'model.bin', '-i', 'Once upon a time'],
   stdout: function (out) { 
             output += out;
@@ -86,9 +79,19 @@ context = new WASIContext({
   }
 });
 
+var memory = new WebAssembly.Memory({ initial: 32, maximum: 10000 });
+var wasm = await WebAssembly.instantiateStreaming(
+  fetch('llama2c.wasm'),
+  {
+    ...context.getImportObject(),
+    env: {memory: memory}
+  }
+);
+result = context.start(wasm, {memory: memory});
+
 function isLocalhost() {
   var url = self.location.origin;  
   return url.indexOf('127.0.0.1') !== -1 || url.indexOf('localhost') !== -1;
 }
 
-result = await WASIJS.start(fetch('llama2c.wasm'), context, wasmImports);
+//result = await WASIJS.start(fetch('llama2c.wasm'), context);
