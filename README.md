@@ -1,4 +1,6 @@
-# Minimal llama2.c to WebAssembly template
+# Minimal llama2.c to WebAssembly port
+
+[Demo](https://diegomarcos.com/llama2.c-web/)
 
 - No build system. Just a bash script.
 - No Emscripten. 
